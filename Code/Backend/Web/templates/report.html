@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+        <meta charset="UTF-8">
+        <title>Your Monthly Music Streaming Report</title>
+        <style>
+            .ratings-page {
+                padding: 20px;
+                font-family: Arial, sans-serif;
+            }
+            
+            .ratings-heading {
+                font-size: 24px;
+                margin-bottom: 20px;
+                color: #333;
+            }
+            
+            .ratings-list {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+                gap: 20px;
+            }
+            
+            .rating-card {
+                padding: 20px;
+                border: 1px solid #ddd;
+                border-radius: 8px;
+                background-color: #f9f9f9;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            }
+            
+            .rating-song-name {
+                font-size: 18px;
+                font-weight: bold;
+                color: #333;
+            }
+            
+            .rating-album {
+                font-size: 14px;
+                color: #666;
+            }
+                       
+            .no-ratings {
+                text-align: center;
+                color: #666;
+            }
+
+        </style>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        </head>
+        <body>
+
+        <div class="ratings-page">
+        <h1 class="ratings-heading">Monthly Report of Music Streaming Rating</h1>
+        {% for user in users %}
+        {% if user %}
+        <div class="ratings-list">
+            {% for album in user.albums %}
+            <h2>Album: {{ album.album_name }}</h2>
+                {% for song in album.songs %}
+                    <div class="rating-card">
+                    <h3 class="rating-song-name">{{ song.song_name }}</h3>
+                    
+                    {% for rating in song.ratings %}
+                        {% if rating %}
+                        <p>{{ rating.rating }} Star Rating by {{ rating.user.name }}</p>
+                        {% else %}
+                        <p>No Rating Recevied</p>
+                        {% endif %}
+                    {% endfor %}
+                
+                    </div>
+                {% endfor %}
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="no-ratings">
+            <p>No Music found.</p>
+        </div>
+        {% endif %}
+        {% endfor %}
+        </div>
+
+        </body>
+        </html>
